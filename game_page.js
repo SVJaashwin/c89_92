@@ -1,84 +1,77 @@
-var player1_name = localStorage.getItem("player1");
-var player2_name = localStorage.getItem("player2");
+  var player1name = localStorage.getItem("player1")
+  var player2name = localStorage.getItem("player2");
 
-var player1_score = 0;
-var player2_score = 0;
+	var player1score = 0;
+	var player2score = 0;
 
-var q_turn="player1";
-var a_turn="player2";
+document.getElementById("player1_name").innerHTML=player1name + " : ";
+document.getElementById("player2_name").innerHTML=player2name + " : ";
 
-document.getElementById("player1_name").innerHTML=player1_name + ":";
-document.getElementById("player2_name").innerHTML=player2_name + ":";
+document.getElementById("player1_scores").innerHTML=player1score ;
+document.getElementById("player2_scores").innerHTML=player2score ;
 
-document.getElementById("player1_score").innerHTML=player1_score ;
-document.getElementById("player2_score").innerHTML=player2_score ;
+document.getElementById("player_question").innerHTML = "Question Turn - " + player1name ;
+document.getElementById("player_answer").innerHTML = "Answer Turn - " + player2name ;
 
-document.getElementById("player_question").innerHTML= "q turn :"+ player1_name;
+function send () {
+	number1 = document.getElementById("number1").value;
+	number2 = document.getElementById("number2").value;
+	actual_answer = parseInt(number1) * parseInt(number2);
+	console.log(actual_answer);
 
-document.getElementById("player_answer").innerHTML= "a turn :"+ player2_name;
 
-function send(){
-    get_word=document.getElementById("word").value;
-    
-    word=get_word.toLowerCase();
-
-    console.log("word is "+word);
-
-     var charAt1= word.charAt(1);
-     console.log("charAt1:",charAt1);
-
-    len=Math.floor(word.length/2);
-
-     var charAt2= word.charAt(len);
-     console.log("charAt2:",charAt2);
-    
-    var charAt3= word.charAt(len-1);
-    console.log("charAt3:",charAt3);
-
-    replace1=word.replace(charAt1,"_");
-    replace2=replace1.replace(charAt2,"_");
-    replace3=replace2.replace(charAt3,"_");
-    console.log(replace3);
-
-    q_word="<center> <h4 id='word_display'> Q."+replace3+"</h4>";
-    a_word="<br> <input type='text' id='ans_input'> ";
-    check_button="<br><br> <button class='btn btn-info' onclick='check()'> check </button></center>";
-
-     console.log(q_word + a_word + check_button);
-
-    document.getElementById("output").innerHTML= q_word + a_word + check_button ;
-    document.getElementById("word").value="";
-    
+    question_number = "<h4>" + number1 + " X "+ number2 +"</h4>";
+    input_box = "<br>Answer : <input type='text' id='input_check_box'>";
+    check_button = "<br><br><button class='btn btn-info' onclick='check()'>Check</button>";
+    row =  question_number + input_box + check_button ; 
+    document.getElementById("output").innerHTML = row;
+	document.getElementById("number1").value = "";
+	document.getElementById("number2").value = "";
 }
-function check(){
-    get_answer=document.getElementById("ans_input").value;
-    answer=get_answer.toLowerCase();
-    console.log(answer);
-    if (answer == word){
-        if (a_turn=="player1"){
-        player1_score = player1_score + 1;
-        document.getElementById("player1_score").innerHTML=player1_score;
-        }
-        else{
-            player2_score = player2_score +1;
-            document.getElementById("player2_score").innerHTML=player2_score;
-        }
-    }
-    if (q_turn == "player1"){
-        q_turn="player2";
-        document.getElementById("player_question").innerHTML="q_turn"+player2_name;
-    }
-    else{
-        q_turn="player1";
-        document.getElementById("player_question").innerHTML="q_turn"+player1_name;
-    }
-    if (a_turn == "player2"){
-        a_turn="player1";
-        document.getElementById("player_answer").innerHTML="a_turn"+player1_name;
-    }
-    else {
-        a_turn="player2"
-        document.getElementById("player_answer").innerHTML="a_turn"+player2_name;
-    }
-    document.getElementById("output").innerHTML="";
+
+
+question_turn = "player1";
+answer_turn = "player2";
+
+function check()
+{
+	get_answer = document.getElementById("input_check_box").value;
+	if(get_answer == actual_answer)	
+	{
+		if(answer_turn == "player1")
+		{
+			  player1score = player1score +1;
+		    document.getElementById("player1_scores").innerHTML = player1score;
+		}
+		else 
+		{
+			 player2score = player2score +1;
+		    document.getElementById("player2_scores").innerHTML = player2score;
+		}
+	}
+	
+	if(question_turn == "player1name")
+	{    
+		question_turn = " player2name"
+		document.getElementById("player_question").innerHTML = "question Turn - " + player2name ;
+	}
+	else 
+	{
+		question_turn = "player1name"
+		document.getElementById("player_question").innerHTML = "question Turn - " + player1name ;
+	}
+
+	if(answer_turn == "player1name")
+	{
+		answer_turn = " player2name"
+		document.getElementById("player_answer").innerHTML = "Answer Turn - " + player2name ;
+	}
+	else 
+	{
+		answer_turn = "player1name"
+		document.getElementById("player_answer").innerHTML = "Answer Turn - " + player1name ;
+	}
+
+    document.getElementById("output").innerHTML = "";
 }
+
